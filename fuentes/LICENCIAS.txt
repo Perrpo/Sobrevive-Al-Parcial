@@ -1,0 +1,7 @@
+Fuentes usadas en el juego (todas con licencia SIL Open Font License 1.1, libres para usar en proyectos):
+
+- Bagel Fat One  — Kyungwon Kim. https://fonts.google.com/specimen/Bagel+Fat+One
+- Figtree        — Erik Kennedy. https://fonts.google.com/specimen/Figtree
+- Kalam          — Indian Type Foundry. https://fonts.google.com/specimen/Kalam
+
+Texto completo de la licencia: https://openfontlicense.org
