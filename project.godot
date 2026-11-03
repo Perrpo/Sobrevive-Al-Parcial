@@ -1,0 +1,48 @@
+; Configuración del proyecto de Godot 4.5.
+; Los controles (teclas) se definen en autoload/Controles.gd para que se lean más fácil.
+
+config_version=5
+
+[application]
+
+config/name="Sobrevive al Parcial"
+config/description="Junta los apuntes por la universidad sin que te pillen y llega al parcial antes del timbre."
+config/version="1.0"
+run/main_scene="res://escenas/Splash.tscn"
+config/features=PackedStringArray("4.5", "GL Compatibility")
+boot_splash/bg_color=Color(0.0627451, 0.0941176, 0.168627, 1)
+boot_splash/show_image=false
+config/icon="res://icon.svg"
+
+[autoload]
+
+Estilo="*res://autoload/Estilo.gd"
+Controles="*res://autoload/Controles.gd"
+Partida="*res://autoload/Partida.gd"
+Audio="*res://autoload/Audio.gd"
+Transicion="*res://autoload/Transicion.gd"
+Nube="*res://autoload/Nube.gd"
+Recorrido="*res://pruebas/Recorrido.gd"
+
+[display]
+
+window/size/viewport_width=1280
+window/size/viewport_height=720
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+window/handheld/orientation=4
+
+[gui]
+
+theme/default_theme_scale=1.0
+
+[physics]
+
+common/physics_ticks_per_second=60
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/vram_compression/import_etc2_astc=true
+anti_aliasing/quality/msaa_3d=1

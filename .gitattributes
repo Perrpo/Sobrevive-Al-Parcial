@@ -1,0 +1,10 @@
+# Normaliza finales de línea para que no haya cambios falsos entre Windows y Linux
+* text=auto eol=lf
+*.wav binary
+*.woff2 binary
+*.png binary
+*.bat text eol=crlf
+*.jar binary
+# El juego exportado para Android: Git no debe tocar ni un byte (Godot revisa el tamaño de cada archivo)
+android-studio/assets/** -text
+android-studio/assetPackInstallTime/** -text

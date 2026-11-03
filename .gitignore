@@ -1,0 +1,14 @@
+# Godot: carpeta de caché que se regenera sola al abrir el proyecto
+/.godot/
+*.tmp
+
+# Juego ya exportado (se sube como Release, no al código)
+/exportar/
+
+# Proyecto de Android generado por Godot (pesa mucho; se regenera desde Godot)
+/android/
+
+# Nunca subir llaves de firma ni rutas locales
+*.jks
+*.keystore
+local.properties
