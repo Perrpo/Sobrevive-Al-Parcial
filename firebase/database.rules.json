@@ -1,0 +1,21 @@
+{
+  "rules": {
+    ".read": false,
+    ".write": false,
+    "puntajes": {
+      ".read": true,
+      ".indexOn": ["puntaje"],
+      "$id": {
+        ".write": "!data.exists()",
+        ".validate": "newData.hasChildren(['nombre', 'nota', 'puntaje', 'ranas', 'plataforma', 'momento'])",
+        "nombre": { ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 14" },
+        "nota": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 5" },
+        "puntaje": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 100000" },
+        "ranas": { ".validate": "newData.isNumber() && newData.val() >= 0 && newData.val() <= 3" },
+        "plataforma": { ".validate": "newData.isString() && newData.val().length <= 20" },
+        "momento": { ".validate": "newData.val() == now" },
+        "$otro": { ".validate": false }
+      }
+    }
+  }
+}
