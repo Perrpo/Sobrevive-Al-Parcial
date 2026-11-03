@@ -1,0 +1,86 @@
+CÓMO CAMBIAR EL CÓDIGO (por ejemplo, los créditos)
+====================================================
+
+REGLA DE ORO
+El juego se programa en GODOT. Android Studio solo empaqueta lo que Godot exporta.
+NO editen los archivos de la carpeta assets/ en Android Studio: Godot guarda el tamaño
+exacto de cada archivo en un índice (assets.sparsepck). Si un archivo cambia de tamaño,
+el juego lo lee cortado y se daña.
+
+
+PASO 1 - CAMBIAR Y PROBAR EN EL PC (Godot)
+------------------------------------------
+1. Abrir Godot 4.5 -> Importar -> elegir project.godot de esta carpeta.
+2. Abajo a la izquierda, en "Sistema de archivos", abrir escenas -> Creditos.gd
+   (doble clic: se abre en el editor de código de Godot).
+3. Al principio del archivo está esto:
+
+       const EQUIPO := [
+           ["Andrés Núñez", "Programación y diseño de niveles"],
+           ["Andrés Navarro", "Interfaz, sonido y wireframes"],
+           ["Andrey Osorio", "Pruebas y animaciones"],
+       ]
+
+   Cambiar los nombres y lo que hizo cada uno (dejar las comillas y las comas).
+4. Guardar con Ctrl+S.
+5. F5 (o el botón Play arriba a la derecha) para jugar y ver los créditos.
+
+Otros cambios fáciles:
+- Nombres, horas, tiempo y mapas de los niveles ... niveles/Datos.gd
+- Cómo se calcula la nota del parcial ............ autoload/Partida.gd (calcular_nota)
+- Poder de la rana (duración y usos) ............. autoload/Partida.gd (DURACION_PODER, USOS_PODER)
+- Animación del parcial final .................... escenas/Final.gd
+- Textos de la historia del inicio ............... escenas/Historia.gd (función _ready, lista _eventos)
+- Colores de la interfaz ......................... autoload/Estilo.gd
+- Ranking en línea (dirección de Firebase) ....... autoload/Nube.gd (URL_BASE, ver FIREBASE.md)
+
+
+PASO 2 - LLEVAR EL CAMBIO A ANDROID STUDIO
+------------------------------------------
+Esto se configura UNA sola vez:
+a. Godot -> Editor -> Administrar plantillas de exportación -> Descargar e instalar
+   (pesa alrededor de 1 GB, solo la primera vez).
+b. Godot -> Editor -> Configuración del editor -> Exportar -> Android:
+     Java Sdk Path    = C:\Program Files\Android\Android Studio\jbr
+     Android Sdk Path = C:\Users\TU_USUARIO\AppData\Local\Android\Sdk
+c. Godot -> Proyecto -> Instalar plantilla de compilación de Android -> Instalar.
+   Eso crea la carpeta android\build dentro del proyecto.
+
+Cada vez que cambien algo:
+d. Godot -> Proyecto -> Exportar -> elegir "Android" -> Exportar proyecto
+   -> guardarlo como exportar\android\SobreviveAlParcial.apk (crear la carpeta si no existe).
+   Godot compila con Gradle y además actualiza la carpeta android\build.
+e. Android Studio -> File -> Open -> la carpeta android\build del proyecto -> Run.
+   Para el repositorio: copiar las carpetas assets y assetPackInstallTime de android\build
+   a la carpeta android-studio (esa es la que se sube; ver android-studio\LEEME.md).
+   (Ese .apk de exportar\android también se puede instalar directo en el celular.)
+
+Opcional: para que Android Studio use el mismo nombre de paquete que Godot,
+agregar al final de android\build\gradle.properties:
+
+    export_package_name=com.equipo.sobrevivealparcial
+    export_version_code=1
+    export_version_name=1.0
+    export_enabled_abis=armeabi-v7a|arm64-v8a|x86_64
+
+
+PASO 3 - WINDOWS
+----------------
+Godot -> Proyecto -> Exportar -> "Windows" -> Exportar proyecto -> SobreviveAlParcial.exe
+
+
+¿CÓMO CORRE TODO DESDE UN SOLO ARCHIVO?
+---------------------------------------
+- El .exe de Windows = el motor Godot (programa en C++ ya compilado) + un "paquete" (.pck)
+  pegado al final con las escenas, scripts, sonidos y letras del juego.
+- El .apk de Android = un zip con:
+    libgodot_android.so ... el motor Godot compilado para el procesador del celular
+    classes.dex .......... GodotApp.java: la Activity que Android abre y que arranca el motor
+    assets\ .............. el juego (scripts .gd, escenas, sonidos, letras) + el índice
+    res\ ................. ícono y nombre de la app
+- Al abrir: el motor lee project.binary (la configuración), carga los autoloads
+  (Estilo, Partida, Audio...) y abre la escena principal (Splash). Desde ahí cada
+  pantalla cambia a la siguiente con Transicion.ir("res://escenas/...").
+- No hay modelos 3D descargados: los scripts arman todo (Constructor.gd) a partir de
+  cajas, cilindros y esferas, y los niveles salen de mapas de texto (Datos.gd).
+  Por eso el juego en sí pesa menos de 1 MB; lo que pesa es el motor.
